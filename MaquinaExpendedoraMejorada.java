@@ -86,14 +86,31 @@ public class MaquinaExpendedoraMejorada {
         return cantidadDeDineroADevolver;
     } 
     
-    public int vaciarDineroDeLaMaquina()
+    public void vaciarDineroDeLaMaquina()
     {       
-            int dineroRetiradoMaquina;
-            dineroRetiradoMaquina = balanceClienteActual + totalDineroAcumulado;
-            balanceClienteActual = 0;
-            totalDineroAcumulado = 0;
-            return dineroRetiradoMaquina;
-        }         
+          
+        if(balanceClienteActual <= 0) {        
+                int dineroRetiradoMaquina;
+                dineroRetiradoMaquina = totalDineroAcumulado;
+                totalDineroAcumulado = 0;
+            
+                System.out.println("##################");
+                System.out.println("# Dinero Extraido de la Maquina:");
+                System.out.println("# " + dineroRetiradoMaquina + "€ ");
+                System.out.println("##################");
+                System.out.println();         
+
+        }
+        else {
+                System.out.println("##################");
+                System.out.println("ERROR ");
+                System.out.println("Operación en cuerso");
+                System.out.println(balanceClienteActual + "€ introducidos ");
+                System.out.println("Retire el dinero para continuar ");
+                System.out.println("##################");
+                System.out.println();
+        }            
+      }         
     }
     
 
