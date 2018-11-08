@@ -12,15 +12,20 @@ public class MaquinaExpendedoraMejorada {
     private String estacionDestino;
     // Si es maquina con premio o no
     private boolean tipoMaquina;
-
+    // Contador para el numero de billetes expedidos
+    private int nBilletes;
+    // Numero de billetes vendidos
+    private int contador;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean premio) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean premio, int numeroBilletesExpedibles) {
         precioBillete = precioDelBillete;
         tipoMaquina = premio;
+        nBilletes = numeroBilletesExpedibles;
+        contador = 0;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
@@ -45,12 +50,21 @@ public class MaquinaExpendedoraMejorada {
      * Simula la introduccion de dinero por parte del cliente actual
      */
     public void introducirDinero(int cantidadIntroducida) {
+        if(contador < nBilletes) {
         if(cantidadIntroducida > 0) {
             balanceClienteActual = balanceClienteActual + cantidadIntroducida;
         }
         else {
             System.out.println(cantidadIntroducida + " no es una cantidad de dinero valida.");
-        }        
+        }
+    }
+        else{
+        System.out.println("#################");
+        System.out.println("No está permitido introducir dinero ya que la maquina no tiene billetes dentro");
+        System.out.println("#################");
+        }
+   
+    
     }
 
     /**
@@ -59,7 +73,8 @@ public class MaquinaExpendedoraMejorada {
     public void imprimirBillete() {
         if(balanceClienteActual >= precioBillete) {        
            if(tipoMaquina == true) {
-            // Simula la impresion de un billete
+             if(contador < nBilletes) {
+               // Simula la impresion de un billete
             System.out.println("##################");
             System.out.println("# Billete de tren:");
             System.out.println("# De " + estacionOrigen + " a " + estacionDestino);
@@ -71,9 +86,19 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
-           }
-           else{
-            // Simula la impresion de un billete
+            contador = contador + 1;
+        }
+            else{
+             System.out.println("##################");
+             System.out.println("# ERROR, Maquina Vacia de Billetes");
+             System.out.println("# Si ha introducido dinero en la maquina, por favor retirelo");
+             System.out.println("##################");
+            }
+        }
+         
+         else{
+            if(contador < nBilletes) {
+             // Simula la impresion de un billete
             System.out.println("##################");
             System.out.println("# Billete de tren:");
             System.out.println("# De " + estacionOrigen + " a " + estacionDestino);
@@ -85,6 +110,14 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
+            contador = contador + 1;
+            }
+            else{
+            System.out.println("##################");
+             System.out.println("# ERROR, Maquina Vacia de Billetes");
+             System.out.println("# Si ha introducido dinero en la maquina, por favor retirelo");
+             System.out.println("##################");
+            }
             }
         }
         else {
